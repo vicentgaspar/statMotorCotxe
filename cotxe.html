@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<!--HTML-->
+		<title>000</title>
+		<meta name="viewport" content="width=decive-width, initial-scale=1, maximun-scale=no">
+	<!--SCRIPTS-->
+		<link rel="stylesheet" type="text/css" href="jqm/jquery.mobile-1.3.2.css">	
+		<script type="text/javaScript" src="js/jquery203.js"></script>
+		<script type="text/javaScript" src="jqm/jquery.mobile-1.3.2.js"></script>
+	<!--CODIC CSS-->	
+		<style type="text/css">
+			.ui-slider-switch{ width: 10em !important}
+		/*COMENTARI*/
+
+		</style>
+	<!--CODIC JAVASCRIPT-->
+		<script type="text/javascript">
+
+			//** VARIABLES
+			var estat = 0; var velocitat = 0; var maxima;
+
+			$(function () {
+				//** VALORS INICIALS
+				maxima = $('#maxima').val();//** AGAFA VALOR id="maxima"
+				$('#velocitat').val('0');//** id="velocitat" COMENSA EN 0
+
+				//** FLIP == MOTOR PARAT ** TAMBE CONTROLS AMAGATS(VORE *1)
+				$('#startStop').val('0');//FILP = --value="0"
+				//** FILP --startStop, COMPROBA ESTAT
+				$('#startStop').on('slidestop', function( event){
+					//** CHEQUEA EL VALOR --value, DEL FLIP --startStop, I HO GUARDA EN UNA VARIABLE
+					var option = $('#startStop :checked').val();
+					//** CONDICIO VALOR
+					if (option == 0){//** VALOR, value="0"
+						$('#controls').hide();//**DIV --controls, OCULTO
+						estat = 0;
+					} else {
+						$('#controls').show();//**DIV --controls, ES MOSTRA
+						estat = 1;
+					}
+				});
+
+			});
+
+		//** FUNCIONS
+			//** ACELERAR
+			function accelerar() {
+				if (estat == 1) {//** VARIABLE --estat = 1
+					if (velocitat < maxima) velocitat += 1;//** --velocitat, POT AUMENTAR
+				}
+				//** ID --velocitat, S'APLICA VARIABLE --velocitat
+				$('#velocitat').val(velocitat);
+			}
+			//** DESACELERAR
+			function desaccelerar() {       
+				if (estat == 1) {//** VARIABLE --estat = 1
+				    if (velocitat > 0 ) velocitat -= 1;//** --velocitat, POT DISMINUIR   
+				} 
+				//** ID --velocitat, S'APLICA VARIABLE --velocitat   
+				$('#velocitat').val(velocitat);
+			}
+			//** TOPE VELOCIDAD
+			function getMaxima() { 	
+				maxima = $('#maxima').val(); //** --id=, MAXIMA, --value="120"	
+			}   
+
+
+		</script>
+
+</head>
+
+<!--BODY-->	
+	<body>
+	<!--CABECERA-->
+		<div data-role="header" data-theme="b" data-position="fixed">
+			<h1>cotxe</h1>
+		</div>
+	<!--DIV CONTENGUT-->
+	<div data-role="content">
+    	<!--TABLA-->
+      	<table align="center" border="1" width='60%'>
+      		<tr>
+      		<!--TITOL-->
+      			<td colspan="2" align=center> El meu cotxe </td>
+      		</tr>
+	  		<tr >
+	  		<!--FLIP startStop-->
+	  			<td align='center' colspan='2'>  
+					<select name="startStop" id="startStop" data-role="slider">
+						<option value="0">Motor parat</option>
+						<option value="1">Motor en marxa</option>
+					</select>
+				</td> 
+	  		</tr>	  
+	  	</table>
+	  	<!--DIV CONTROLS I AMAGAT-->
+    		<div id='controls'>
+    			<!--TABLA-->
+           		<table align="center" border="1" width='60%'>
+	  				<tr> 	
+	  					<td><!--BOTO ACELERAR-->
+	  						<input type="button" name="boto" value="Accelerar" style="width:100%;"   
+                              onClick="accelerar();"> 
+                        </td>
+                      	<td><!--BOTO DESACELERAR-->
+                      		<input type="button" name="boto" value="Desaccelerar" style="width:100%;"      
+                              onClick="desaccelerar();">
+                        </td>
+      				</tr>
+
+      				<tr>
+      					<td><!--TEXT VELOCITAT-->
+      						<input type="text" id="ele30" size='10' value='Velocitat' readonly>
+      					</td>
+      					<!--VALOR TEXT VELOCITAT-->
+                     	<td align='center'>
+                     		<input type="text" id="velocitat" size='10' value = '0' readonly>
+                     	</td>
+     				</tr>   
+     				<tr>         
+     					<td><!--TEXT MAXIMA-->
+     						<input type="text" id="ele30" size='10' value='Màxima' readonly>
+     					</td>
+                    	<td align='center'>
+                    		<input type="text" id="maxima" size='10' value = '120' 
+                              onChange='getMaxima();'>
+                          </td>
+      				</tr>     
+      			</table> 
+   	  		</div>
+   		</div> 
+	</body>
+</html>
